@@ -7,13 +7,13 @@ export const productTypes: ProductType[] = [
     "category": "software"
   },
   {
-    "id": "mobile-app",
-    "name": "Mobile App",
+    "id": "web-app",
+    "name": "Web App",
     "category": "software"
   },
   {
-    "id": "web-app",
-    "name": "Web App",
+    "id": "mobile-app",
+    "name": "Mobile App",
     "category": "software"
   },
   {
@@ -27,78 +27,13 @@ export const productTypes: ProductType[] = [
     "category": "software"
   },
   {
-    "id": "ai-agent",
-    "name": "AI Agent",
+    "id": "desktop-app",
+    "name": "Desktop App",
     "category": "software"
   },
   {
-    "id": "ai-automation",
-    "name": "AI Automation",
+    "id": "cross-platform",
+    "name": "Web App + Mobile App + Desktop App",
     "category": "software"
-  },
-  {
-    "id": "developer-tool",
-    "name": "Developer Tool",
-    "category": "software"
-  },
-  {
-    "id": "api",
-    "name": "API",
-    "category": "software"
-  },
-  {
-    "id": "dashboard",
-    "name": "Dashboard / Analytics",
-    "category": "software"
-  },
-  {
-    "id": "tracking-tool",
-    "name": "Tracking Tool",
-    "category": "software"
-  },
-  {
-    "id": "management-system",
-    "name": "Management System",
-    "category": "software"
-  },
-  {
-    "id": "booking-system",
-    "name": "Booking / Scheduling",
-    "category": "software"
-  },
-  {
-    "id": "marketplace",
-    "name": "Marketplace",
-    "category": "software"
-  },
-  {
-    "id": "directory",
-    "name": "Directory",
-    "category": "software"
-  },
-  {
-    "id": "recommendation-tool",
-    "name": "Recommendation Tool",
-    "category": "software"
-  },
-  {
-    "id": "generator",
-    "name": "Generator",
-    "category": "software"
-  },
-  {
-    "id": "calculator",
-    "name": "Calculator / Simulator",
-    "category": "software"
-  },
-  {
-    "id": "template",
-    "name": "Template / Digital Kit",
-    "category": "digital"
-  },
-  {
-    "id": "database",
-    "name": "Database / Resource Library",
-    "category": "digital"
   }
 ];
