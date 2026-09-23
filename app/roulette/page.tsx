@@ -53,7 +53,7 @@ export default function RoulettePage() {
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center p-4 md:p-8">
-        <div className="max-w-3xl mx-auto w-full flex-1 flex flex-col">
+        <div className="max-w-4xl mx-auto w-full flex-1 flex flex-col">
           {stage < 4 && <StageIndicator currentStage={stage} />}
           
           <div className="flex-1 flex flex-col items-center justify-center w-full">

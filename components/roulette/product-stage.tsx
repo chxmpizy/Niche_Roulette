@@ -55,9 +55,9 @@ export function ProductStage({
   }, [finalResult, isSpinning, onComplete]);
 
   return (
-    <div className="flex flex-col items-center w-full max-w-2xl">
+    <div className="flex flex-col items-center w-full max-w-6xl">
       <div 
-        className="w-full bg-[#0a0a0a] border border-gray-800 rounded-lg p-12 md:p-24 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden cursor-pointer group"
+        className="w-full bg-[#0a0a0a] border border-gray-800 rounded-lg p-12 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden cursor-pointer group"
         onClick={() => !finalResult && !isSpinning && startSpin()}
       >
         <div className="absolute top-8 text-gray-600 text-xs font-mono tracking-widest uppercase">
@@ -65,7 +65,7 @@ export function ProductStage({
         </div>
         
         <div className={clsx(
-          "text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-center font-mono w-full",
+          "text-5xl font-medium tracking-tight text-center font-mono w-full",
           finalResult ? "text-white" : "text-gray-300"
         )}>
           <SlotReel 

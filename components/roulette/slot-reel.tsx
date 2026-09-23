@@ -76,7 +76,7 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
   }, [isSpinning, items, onStop]);
 
   return (
-    <div className="h-[1.4em] overflow-hidden w-full flex justify-center items-start">
+    <div className="h-[1.4em] overflow-hidden w-auto flex justify-center items-start">
       <div
         ref={stripRef}
         className="flex flex-col items-center will-change-transform origin-top"
