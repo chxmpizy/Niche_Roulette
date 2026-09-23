@@ -1,83 +1,107 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { categories } from "@/data/categories";
-import { getRandomElement, sleep } from "@/lib/random";
-import { motion } from "framer-motion";
+import { SlotReel } from "./slot-reel";
 import { clsx } from "clsx";
 
-export function CategoryStage({ onComplete }: { onComplete: (cat: string) => void }) {
+export function CategoryStage({ 
+  onComplete, 
+  setHints 
+}: { 
+  onComplete: (cat: string) => void,
+  setHints: (hints: React.ReactNode) => void
+}) {
   const [isSpinning, setIsSpinning] = useState(false);
-  const [currentDisplay, setCurrentDisplay] = useState("???");
   const [finalResult, setFinalResult] = useState<string | null>(null);
 
-  const spin = async () => {
+  const categoryNames = categories.map(c => c.name);
+
+  const startSpin = () => {
+    if (isSpinning) return;
     setIsSpinning(true);
     setFinalResult(null);
-
-    const spinDuration = 3000;
-    const intervalTime = 50;
-    const steps = spinDuration / intervalTime;
-    
-    for (let i = 0; i < steps; i++) {
-      // simulate slowing down by skipping some updates near the end
-      if (i > steps * 0.8 && i % 3 !== 0) {
-        await sleep(intervalTime);
-        continue;
-      }
-      if (i > steps * 0.9 && i % 5 !== 0) {
-        await sleep(intervalTime);
-        continue;
-      }
-      
-      setCurrentDisplay(getRandomElement(categories).name);
-      await sleep(intervalTime);
-    }
-
-    const selected = getRandomElement(categories).name;
-    setCurrentDisplay(selected);
-    setFinalResult(selected);
-    setIsSpinning(false);
+    setHints(null);
   };
 
+  const handleStop = (selected: string) => {
+    setFinalResult(selected);
+    setIsSpinning(false);
+    setHints(
+      <><kbd className="font-mono text-[10px] uppercase border border-gray-700 rounded px-1.5 py-0.5 text-gray-400 bg-gray-900 mr-2">enter</kbd> to continue</>
+    );
+  };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.code === "Space") {
+        e.preventDefault();
+        if (!finalResult && !isSpinning) {
+          startSpin();
+        }
+      } else if (e.code === "Enter") {
+        e.preventDefault();
+        if (finalResult && !isSpinning) {
+          onComplete(finalResult);
+        }
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [finalResult, isSpinning, onComplete]);
+
   return (
-    <div className="flex flex-col items-center w-full max-w-md">
-      <div className="w-full border border-gray-800 bg-[#050505] p-8 md:p-12 flex flex-col items-center justify-center min-h-[300px] mb-8 relative overflow-hidden">
-        <div className="absolute top-6 text-gray-500 text-xs tracking-[0.2em] uppercase">
-          Category
+    <div className="flex flex-col items-center w-full max-w-2xl">
+      <div 
+        className="w-full bg-[#0a0a0a] border border-gray-800 rounded-lg p-12 md:p-24 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden cursor-pointer group"
+        onClick={() => !finalResult && !isSpinning && startSpin()}
+      >
+        <div className="absolute top-8 text-gray-600 text-xs font-mono tracking-widest uppercase">
+          Select Category
         </div>
         
-        <motion.div
-          key={currentDisplay}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -10 }}
-          transition={{ duration: 0.1 }}
-          className={clsx(
-            "text-3xl md:text-5xl font-bold text-center",
-            finalResult ? "text-white" : "text-gray-400"
+        <div className={clsx(
+          "text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-center font-mono w-full",
+          finalResult ? "text-white" : "text-gray-300"
+        )}>
+          {finalResult ? (
+            <div className="h-[1.4em] flex items-center justify-center whitespace-nowrap relative">
+              {finalResult}
+              <div className="absolute bottom-0 left-0 w-full h-[2px] bg-white animate-in slide-in-from-left duration-300" />
+            </div>
+          ) : (
+            <SlotReel 
+              items={categoryNames} 
+              isSpinning={isSpinning} 
+              onStop={handleStop} 
+            />
           )}
-        >
-          {currentDisplay}
-        </motion.div>
+        </div>
       </div>
 
-      {!finalResult ? (
-        <button
-          onClick={spin}
-          disabled={isSpinning}
-          className="w-full py-4 bg-white text-black font-bold uppercase tracking-widest hover:bg-gray-200 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-        >
-          {isSpinning ? "Spinning..." : "Spin the Wheel"}
-        </button>
-      ) : (
-        <button
-          onClick={() => onComplete(finalResult)}
-          className="w-full py-4 border border-white text-white font-bold uppercase tracking-widest hover:bg-white hover:text-black transition-colors"
-        >
-          Continue →
-        </button>
-      )}
+      <div className="h-20 mt-8 w-full flex items-center justify-center">
+        {!finalResult ? (
+          <button
+            onClick={startSpin}
+            disabled={isSpinning}
+            className={clsx(
+              "px-8 py-3 text-sm font-mono tracking-widest uppercase rounded border transition-all duration-300",
+              isSpinning 
+                ? "border-transparent text-gray-600 opacity-50"
+                : "border-gray-700 text-gray-400 hover:text-white hover:border-white hover:bg-white/5"
+            )}
+          >
+            {isSpinning ? "Spinning..." : "Spin"}
+          </button>
+        ) : (
+          <button
+            onClick={() => onComplete(finalResult)}
+            className="px-8 py-3 text-sm font-mono tracking-widest uppercase rounded border border-white bg-white text-black hover:bg-gray-200 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
+          >
+            Continue ▸
+          </button>
+        )}
+      </div>
     </div>
   );
 }
