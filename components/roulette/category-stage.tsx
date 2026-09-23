@@ -64,18 +64,12 @@ export function CategoryStage({
           "text-3xl md:text-5xl lg:text-6xl font-medium tracking-tight text-center font-mono w-full",
           finalResult ? "text-white" : "text-gray-300"
         )}>
-          {finalResult ? (
-            <div className="h-[1.4em] flex items-center justify-center whitespace-nowrap relative">
-              {finalResult}
-              <div className="absolute bottom-0 left-0 w-full h-[2px] bg-white animate-in slide-in-from-left duration-300" />
-            </div>
-          ) : (
-            <SlotReel 
-              items={categoryNames} 
-              isSpinning={isSpinning} 
-              onStop={handleStop} 
-            />
-          )}
+          <SlotReel 
+            items={categoryNames} 
+            isSpinning={isSpinning} 
+            onStop={handleStop} 
+            hasLanded={!!finalResult}
+          />
         </div>
       </div>
 

@@ -2,91 +2,90 @@
 
 import { useEffect, useRef, useState } from "react";
 import { clsx } from "clsx";
-import { getRandomElement, sleep } from "@/lib/random";
+import { getRandomElement } from "@/lib/random";
 
 type SlotReelProps = {
   items: string[];
   isSpinning: boolean;
   onStop: (selected: string) => void;
+  hasLanded?: boolean;
 };
 
-export function SlotReel({ items, isSpinning, onStop }: SlotReelProps) {
-  const [displayItems, setDisplayItems] = useState<string[]>([]);
-  const [offset, setOffset] = useState(0);
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isSettling, setIsSettling] = useState(false);
+export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotReelProps) {
+  const [displayItems, setDisplayItems] = useState<string[]>(["???"]);
+  const stripRef = useRef<HTMLDivElement>(null);
+  const isSpinningRef = useRef(false);
 
   useEffect(() => {
-    // Initial display
-    if (displayItems.length === 0) {
-      setDisplayItems(["???"]);
-    }
-  }, [displayItems]);
+    if (!isSpinning || isSpinningRef.current) return;
+    isSpinningRef.current = true;
 
-  useEffect(() => {
-    if (!isSpinning) return;
-
-    let isActive = true;
-    const spinDuration = 2500 + Math.random() * 1000;
-    
-    // Generate a long list of items for the strip
-    const sequence = ["???"];
+    const duration = 2500 + Math.random() * 1000;
     const fillerCount = 30 + Math.floor(Math.random() * 20);
-    for (let i = 0; i < fillerCount; i++) {
-      sequence.push(getRandomElement(items));
-    }
     const target = getRandomElement(items);
-    sequence.push(target);
+    const jumps = fillerCount + 1; // distance to the target
     
-    setDisplayItems(sequence);
-    setOffset(0);
-    setIsSettling(false);
+    setDisplayItems((prev) => {
+      const sequence = [prev[prev.length - 1] || "???"];
+      for (let i = 0; i < fillerCount; i++) {
+        sequence.push(getRandomElement(items));
+      }
+      sequence.push(target);
+      return sequence;
+    });
 
-    const runSpin = async () => {
-      // Need a tiny delay for DOM to update with new items
-      await sleep(50);
-      if (!isActive) return;
+    // Wait 2 frames to ensure React has fully rendered the new DOM nodes
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        if (!stripRef.current) return;
+        const strip = stripRef.current;
+        
+        // Reset position instantly
+        strip.style.transition = "none";
+        strip.style.transform = "translateY(0)";
+        
+        // Force reflow
+        void strip.offsetHeight;
 
-      const itemHeight = containerRef.current?.firstElementChild?.getBoundingClientRect().height || 60;
-      const totalOffset = (sequence.length - 1) * itemHeight;
-      
-      setOffset(totalOffset);
+        // Apply blur
+        strip.style.filter = "blur(4px)";
+        
+        const lineH = strip.firstElementChild?.getBoundingClientRect().height || 0;
+        const targetY = jumps * lineH;
 
-      setTimeout(() => {
-        if (!isActive) return;
-        setIsSettling(true);
-      }, spinDuration * 0.45);
+        // Start the spin with cubic-bezier
+        strip.style.transition = `transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1)`;
+        strip.style.transform = `translateY(-${targetY}px)`;
 
-      setTimeout(() => {
-        if (!isActive) return;
-        onStop(target);
-      }, spinDuration);
-    };
+        // Remove blur smoothly as it slows down
+        setTimeout(() => {
+          if (stripRef.current) {
+             stripRef.current.style.transition = `transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease-out`;
+             stripRef.current.style.filter = "blur(0px)";
+          }
+        }, duration * 0.45);
 
-    runSpin();
-
-    return () => {
-      isActive = false;
-    };
+        // Notify parent when stopped
+        setTimeout(() => {
+          isSpinningRef.current = false;
+          onStop(target);
+        }, duration);
+      });
+    });
   }, [isSpinning, items, onStop]);
 
   return (
     <div className="h-[1.4em] overflow-hidden w-full flex justify-center items-center">
       <div
-        ref={containerRef}
-        className={clsx(
-          "flex flex-col items-center will-change-transform",
-          isSpinning && !isSettling ? "blur-[4px]" : "blur-0",
-          !isSpinning && !isSettling && "transition-none"
-        )}
-        style={{
-          transform: `translateY(-${offset}px)`,
-          transition: isSpinning ? `transform ${isSettling ? '2.5s' : '3s'} cubic-bezier(0.16, 1, 0.3, 1)` : 'none',
-        }}
+        ref={stripRef}
+        className="flex flex-col items-center will-change-transform"
       >
         {displayItems.map((item, idx) => (
-          <div key={idx} className="h-[1.4em] flex items-center justify-center whitespace-nowrap">
+          <div key={idx} className="h-[1.4em] flex items-center justify-center whitespace-nowrap relative">
             {item}
+            {hasLanded && idx === displayItems.length - 1 && (
+              <div className="absolute bottom-[2px] left-0 w-full h-[3px] bg-white animate-in slide-in-from-left duration-300" />
+            )}
           </div>
         ))}
       </div>
