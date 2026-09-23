@@ -57,25 +57,38 @@ export function playTick(timeOffset = 0) {
   src.stop(time + 0.03);
 }
 
-export function playThunk(timeOffset = 0) {
+export function playLand(timeOffset = 0) {
   const ctx = getAudioContext();
   if (!ctx || !master) return;
   const time = ctx.currentTime + timeOffset;
 
+  // Bright chime (A5)
   const osc = ctx.createOscillator();
-  osc.type = "sine";
-  osc.frequency.setValueAtTime(110, time);
-  osc.frequency.exponentialRampToValueAtTime(55, time + 0.09);
+  osc.type = "triangle";
+  osc.frequency.setValueAtTime(880, time); // A5
   
   const g = ctx.createGain();
-  g.gain.setValueAtTime(0.5, time);
-  g.gain.exponentialRampToValueAtTime(0.001, time + 0.12);
+  g.gain.setValueAtTime(0.3, time);
+  g.gain.exponentialRampToValueAtTime(0.001, time + 0.4);
   
   osc.connect(g);
   g.connect(master);
   
   osc.start(time);
-  osc.stop(time + 0.14);
+  osc.stop(time + 0.5);
+
+  // Lower thud for weight
+  const osc2 = ctx.createOscillator();
+  osc2.type = "sine";
+  osc2.frequency.setValueAtTime(150, time);
+  osc2.frequency.exponentialRampToValueAtTime(55, time + 0.1);
+  const g2 = ctx.createGain();
+  g2.gain.setValueAtTime(0.5, time);
+  g2.gain.exponentialRampToValueAtTime(0.001, time + 0.15);
+  osc2.connect(g2);
+  g2.connect(master);
+  osc2.start(time);
+  osc2.stop(time + 0.2);
 }
 
 export function scheduleReelSound(steps: number, durationMs: number) {
@@ -91,5 +104,5 @@ export function scheduleReelSound(steps: number, durationMs: number) {
     playTick((t0 + t * T) - ctx.currentTime);
   }
   
-  playThunk((t0 + T) - ctx.currentTime);
+  playLand((t0 + T) - ctx.currentTime);
 }

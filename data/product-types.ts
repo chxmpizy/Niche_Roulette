@@ -33,7 +33,7 @@ export const productTypes: ProductType[] = [
   },
   {
     "id": "cross-platform",
-    "name": "Web App + Mobile App + Desktop App",
+    "name": "Web + Mobile + Desktop",
     "category": "software"
   }
 ];
