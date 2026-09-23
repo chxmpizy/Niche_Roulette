@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { clsx } from "clsx";
 import { getRandomElement } from "@/lib/random";
+import { scheduleReelSound } from "@/lib/audio";
 
 type SlotReelProps = {
   items: string[];
@@ -23,7 +23,7 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
     const duration = 2500 + Math.random() * 1000;
     const fillerCount = 30 + Math.floor(Math.random() * 20);
     const target = getRandomElement(items);
-    const jumps = fillerCount + 1; // distance to the target
+    const jumps = fillerCount + 1;
     
     setDisplayItems((prev) => {
       const sequence = [prev[prev.length - 1] || "???"];
@@ -34,30 +34,32 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
       return sequence;
     });
 
-    // Wait 2 frames to ensure React has fully rendered the new DOM nodes
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
         if (!stripRef.current) return;
         const strip = stripRef.current;
         
-        // Reset position instantly
+        // Disable transitions and jump back to the start instantly
         strip.style.transition = "none";
         strip.style.transform = "translateY(0)";
         
-        // Force reflow
+        // Force reflow so the browser registers translateY(0) before we add transition
         void strip.offsetHeight;
 
         // Apply blur
         strip.style.filter = "blur(4px)";
         
+        // Calculate target offset based on actual rendered height
         const lineH = strip.firstElementChild?.getBoundingClientRect().height || 0;
         const targetY = jumps * lineH;
 
-        // Start the spin with cubic-bezier
+        // Animate downward
         strip.style.transition = `transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1)`;
         strip.style.transform = `translateY(-${targetY}px)`;
 
-        // Remove blur smoothly as it slows down
+        // Play the ratchet sound effects matching the curve!
+        scheduleReelSound(jumps, duration);
+
         setTimeout(() => {
           if (stripRef.current) {
              stripRef.current.style.transition = `transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease-out`;
@@ -65,7 +67,6 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
           }
         }, duration * 0.45);
 
-        // Notify parent when stopped
         setTimeout(() => {
           isSpinningRef.current = false;
           onStop(target);
@@ -75,10 +76,10 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
   }, [isSpinning, items, onStop]);
 
   return (
-    <div className="h-[1.4em] overflow-hidden w-full flex justify-center items-center">
+    <div className="h-[1.4em] overflow-hidden w-full flex justify-center items-start">
       <div
         ref={stripRef}
-        className="flex flex-col items-center will-change-transform"
+        className="flex flex-col items-center will-change-transform origin-top"
       >
         {displayItems.map((item, idx) => (
           <div key={idx} className="h-[1.4em] flex items-center justify-center whitespace-nowrap relative">
