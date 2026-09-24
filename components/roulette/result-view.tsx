@@ -52,17 +52,17 @@ export function ResultView({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const shareResult = () => {
-    if (navigator.share) {
-      navigator.share({
-        title: "My Niche Product Idea",
-        text: `I just generated a product idea: ${combinationString}`,
-        url: window.location.href,
-      });
-    } else {
-      copyToClipboard();
-    }
-  };
+  // const shareResult = () => {
+  //   if (navigator.share) {
+  //     navigator.share({
+  //       title: "My Niche Product Idea",
+  //       text: `I just generated a product idea: ${combinationString}`,
+  //       url: window.location.href,
+  //     });
+  //   } else {
+  //     copyToClipboard();
+  //   }
+  // };
 
   if (showPainPoints) {
     return (
@@ -180,7 +180,7 @@ export function ResultView({
             {copied ? "Copied!" : "Copy Result"}
           </span>
         </button>
-        <button
+        {/* <button
           onClick={shareResult}
           className="flex items-center space-x-2 text-gray-500 hover:text-white transition-colors"
         >
@@ -188,7 +188,7 @@ export function ResultView({
           <span className="uppercase text-xs font-mono tracking-widest">
             Share
           </span>
-        </button>
+        </button> */}
       </div>
     </div>
   );
