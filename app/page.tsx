@@ -5,9 +5,7 @@ export default function Home() {
     <main className="flex-1 flex flex-col items-center justify-center p-8 text-center">
       <div className="max-w-2xl mx-auto space-y-12">
         <h1 className="text-5xl md:text-7xl font-bold tracking-tighter uppercase leading-[1.1]">
-          Niche
-          <br />
-          Product
+          Funiche
           <br />
           Roulette
         </h1>
