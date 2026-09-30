@@ -33,19 +33,19 @@ function TimerContent() {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center w-full max-w-6xl mt-12 md:mt-24">
-      <div className="w-full bg-[#1a0c00] border border-orange-500/60 shadow-[0_0_80px_-15px_rgba(249,115,22,0.3)] rounded-lg p-12 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden animate-in zoom-in duration-500">
-        <div className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-500 mb-8 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
+    <div className="flex-1 flex flex-col justify-center items-center w-full max-w-6xl ">
+      {/* <div className="w-full bg-[#1a0c00] border border-orange-500/60 shadow-[0_0_80px_-15px_rgba(249,115,22,0.3)] rounded-lg p-12 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden animate-in zoom-in duration-500"> */}
+        <div className="bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent text-sm font-bold font-mono tracking-[0.3em] uppercase  mb-8 flex items-center gap-2">
+         
           Time Remaining
         </div>
-        <div className="text-6xl md:text-9xl font-black font-mono tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-orange-300 to-orange-600 drop-shadow-[0_0_30px_rgba(249,115,22,0.4)] mb-8">
+        <div className="text-6xl md:text-9xl font-black font-mono  mb-8">
           {formatTimer(timer)}
         </div>
-        <div className="text-orange-200/70 text-lg md:text-xl font-mono tracking-widest uppercase">
+        {/* <div className="text-orange-200/70 text-lg md:text-xl font-mono tracking-widest uppercase">
           Building: <span className="text-orange-400 font-bold">{topic}</span>
-        </div>
-      </div>
+        </div> */}
+      {/* </div> */}
       
       <div className="mt-8 flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-4 w-full sm:w-auto">
         <button
@@ -67,12 +67,12 @@ function TimerContent() {
 
 export default function TimerPage() {
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-[#0a0500] text-orange-50 selection:bg-orange-500/30 items-center px-4">
-      <header className="flex justify-center items-center w-full p-8 absolute top-0 left-0">
+    <div className="flex-1 flex flex-col justify-center min-h-screen bg-[#0a0500] text-orange-50 selection:bg-orange-500/30 items-center px-4">
+      {/* <header className="flex justify-center items-center w-full p-8 absolute top-0 left-0">
         <h1 className="text-xl md:text-2xl font-sans font-bold tracking-tight text-white/90 select-none">
           Funiche <span className="text-orange-500">Roulette</span>
         </h1>
-      </header>
+      </header> */}
       <Suspense fallback={<div className="mt-40 text-orange-500 font-mono animate-pulse">Loading...</div>}>
         <TimerContent />
       </Suspense>
