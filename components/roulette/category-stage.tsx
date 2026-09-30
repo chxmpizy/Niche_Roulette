@@ -66,10 +66,10 @@ export function CategoryStage() {
                 onClick={startSpin}
                 disabled={isSpinning}
                 className={clsx(
-                  "px-8 py-3 text-sm font-mono tracking-widest uppercase rounded border transition-all duration-300",
+                  "px-8 py-3 text-sm font-bold font-mono tracking-widest uppercase rounded transition-all duration-300",
                   isSpinning 
-                    ? "border-transparent text-orange-900/50 opacity-50"
-                    : "border-orange-900/50 text-orange-500/70 hover:text-orange-200 hover:border-orange-500 hover:bg-orange-500/10 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.2)]"
+                    ? "bg-orange-900/30 text-white/50 cursor-not-allowed"
+                    : "bg-orange-500 text-white hover:bg-orange-400 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]"
                 )}
               >
                 {isSpinning ? "Spinning..." : "Spin"}
@@ -77,7 +77,7 @@ export function CategoryStage() {
             ) : (
               <button
                 onClick={startSpin}
-                className="px-8 py-3 text-sm font-bold font-mono tracking-widest uppercase rounded border border-transparent bg-gradient-to-r from-amber-500 to-orange-600 text-black hover:opacity-90 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)]"
+                className="px-8 py-3 text-sm font-bold font-mono tracking-widest uppercase rounded bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:opacity-90 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)]"
               >
                 Spin Again
               </button>
