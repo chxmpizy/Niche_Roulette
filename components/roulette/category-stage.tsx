@@ -71,6 +71,29 @@ export function CategoryStage() {
             </div>
           </div>
 
+          <div className="h-20 mt-8 w-full flex items-center justify-center">
+            {!finalResult ? (
+              <button
+                onClick={startSpin}
+                disabled={isSpinning}
+                className={clsx(
+                  "px-8 py-3 text-sm font-mono tracking-widest uppercase rounded border transition-all duration-300",
+                  isSpinning 
+                    ? "border-transparent text-gray-600 opacity-50"
+                    : "border-gray-700 text-gray-400 hover:text-white hover:border-white hover:bg-white/5"
+                )}
+              >
+                {isSpinning ? "Spinning..." : "Spin"}
+              </button>
+            ) : (
+              <button
+                onClick={startSpin}
+                className="px-8 py-3 text-sm font-mono tracking-widest uppercase rounded border border-white bg-white text-black hover:bg-gray-200 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
+              >
+                Spin Again
+              </button>
+            )}
+          </div>
         </div>
       </main>
 
