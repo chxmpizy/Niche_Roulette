@@ -1,14 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { categories } from "@/data/categories";
 import { SlotReel } from "./slot-reel";
 import { clsx } from "clsx";
 
 export function CategoryStage() {
+  const router = useRouter();
   const [isSpinning, setIsSpinning] = useState(false);
   const [finalResult, setFinalResult] = useState<string | null>(null);
-  const [timer, setTimer] = useState<number | null>(null);
 
   const categoryNames = categories.map((c) => c.name);
 
@@ -16,7 +17,6 @@ export function CategoryStage() {
     if (isSpinning) return;
     setIsSpinning(true);
     setFinalResult(null);
-    setTimer(null); // Cancel timer on re-spin
   };
 
   const handleStop = (selected: string) => {
@@ -24,11 +24,14 @@ export function CategoryStage() {
     setIsSpinning(false);
   };
 
+  const startTimer = (hours: number) => {
+    if (!finalResult) return;
+    router.push(`/timer?topic=${encodeURIComponent(finalResult)}&hours=${hours}`);
+  };
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      // Space or Enter spins unless the timer is actively running
       if (e.code === "Space" || e.code === "Enter") {
-        if (timer !== null) return; // Disable spacebar spin when building
         e.preventDefault();
         if (!isSpinning) {
           startSpin();
@@ -37,23 +40,7 @@ export function CategoryStage() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isSpinning, timer]);
-
-  // Timer Countdown Logic
-  useEffect(() => {
-    if (timer === null || timer <= 0) return;
-    const interval = setInterval(() => {
-      setTimer((t) => (t !== null && t > 0 ? t - 1 : 0));
-    }, 1000);
-    return () => clearInterval(interval);
-  }, [timer]);
-
-  const formatTimer = (totalSeconds: number) => {
-    const h = Math.floor(totalSeconds / 3600);
-    const m = Math.floor((totalSeconds % 3600) / 60);
-    const s = totalSeconds % 60;
-    return `${h.toString().padStart(2, "0")}:${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
-  };
+  }, [isSpinning]);
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0a0500] text-orange-50 selection:bg-orange-500/30">
@@ -86,17 +73,15 @@ export function CategoryStage() {
           
           <div
             className={clsx(
-              "w-full rounded-lg p-12 flex flex-col items-center justify-center min-h-[150px] relative overflow-hidden transition-all duration-500",
-              timer !== null 
-                ? "border border-orange-500/60 shadow-[0_0_80px_-15px_rgba(249,115,22,0.3)] bg-[#1a0c00] scale-[1.02]" 
-                : "bg-[#140a00] border border-orange-900/40 shadow-[0_0_40px_-15px_rgba(249,115,22,0.05)] cursor-pointer group hover:border-orange-500/40 hover:shadow-[0_0_60px_-15px_rgba(249,115,22,0.15)]"
+              "w-full rounded-lg p-12 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden transition-all duration-500",
+              "bg-[#140a00] border border-orange-900/40 shadow-[0_0_40px_-15px_rgba(249,115,22,0.05)] cursor-pointer group hover:border-orange-500/40 hover:shadow-[0_0_60px_-15px_rgba(249,115,22,0.15)]"
             )}
-            onClick={() => !isSpinning && timer === null && startSpin()}
+            onClick={() => !isSpinning && startSpin()}
           >
             <div
               className={clsx(
                 "text-4xl md:text-5xl font-medium tracking-tight text-center font-mono w-full transition-all duration-500",
-                finalResult ? (timer !== null ? "text-orange-300 scale-90" : "text-orange-50") : "text-orange-200/40"
+                finalResult ? "text-orange-50" : "text-orange-200/40"
               )}
             >
               <SlotReel
@@ -106,22 +91,6 @@ export function CategoryStage() {
                 hasLanded={!!finalResult}
               />
             </div>
-
-            {/* In-card Timer Display */}
-            {timer !== null && (
-              <div className="absolute inset-0 flex flex-col items-center justify-center bg-[#1a0c00]/90 backdrop-blur-sm animate-in fade-in duration-500">
-                <div className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-500 mb-4 flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-                  Time Remaining
-                </div>
-                <div className="text-6xl md:text-8xl font-black font-mono tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-orange-300 to-orange-600 drop-shadow-[0_0_30px_rgba(249,115,22,0.4)]">
-                  {formatTimer(timer)}
-                </div>
-                <div className="mt-8 text-orange-200/70 text-sm font-mono tracking-widest uppercase">
-                  Building: <span className="text-orange-400 font-bold">{finalResult}</span>
-                </div>
-              </div>
-            )}
           </div>
 
           <div className="min-h-[5rem] mt-8 w-full flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -138,13 +107,6 @@ export function CategoryStage() {
               >
                 {isSpinning ? "Spinning..." : "Spin"}
               </button>
-            ) : timer !== null ? (
-              <button
-                onClick={() => setTimer(null)}
-                className="px-6 py-2 text-xs font-bold font-mono tracking-widest uppercase rounded border border-orange-900/50 text-orange-500 hover:text-white hover:bg-red-900/60 hover:border-red-500 transition-all duration-300 animate-in fade-in"
-              >
-                Cancel Build
-              </button>
             ) : (
               <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-in fade-in slide-in-from-bottom-4">
                 <button
@@ -154,10 +116,16 @@ export function CategoryStage() {
                   Spin Again
                 </button>
                 <button
-                  onClick={() => setTimer(3 * 60 * 60)} // 3 Hours
+                  onClick={() => startTimer(1)}
+                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold font-mono tracking-widest uppercase rounded border border-orange-600 text-orange-400 hover:bg-orange-900/50 hover:text-orange-200 transition-all duration-300 shadow-[0_0_15px_-5px_rgba(249,115,22,0.2)] flex items-center justify-center gap-2"
+                >
+                  Timer (1h) ⏳
+                </button>
+                <button
+                  onClick={() => startTimer(3)}
                   className="px-8 py-3 w-full sm:w-auto text-sm font-bold font-mono tracking-widest uppercase rounded bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)] flex items-center justify-center gap-2 group"
                 >
-                  Build it! <span className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">🚀</span>
+                  Build it! (3h) <span className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform">🚀</span>
                 </button>
               </div>
             )}
@@ -171,6 +139,10 @@ export function CategoryStage() {
             Space
           </kbd>
           <span>to {finalResult ? "spin again" : "spin"}</span>
+        </div>
+        <div className="flex items-center gap-2 font-mono text-orange-300">
+          <span className="bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent font-bold">Funiche Roulette</span>
+          <span>by <a className="hover:underline" href="https://www.instagram.com/champ.ratt/">@champ.ratt</a></span>
         </div>
       </footer>
     </div>
