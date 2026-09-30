@@ -26,7 +26,9 @@ export function CategoryStage() {
 
   const startTimer = (hours: number) => {
     if (!finalResult) return;
-    router.push(`/timer?topic=${encodeURIComponent(finalResult)}&hours=${hours}`);
+    router.push(
+      `/timer?topic=${encodeURIComponent(finalResult)}&hours=${hours}`,
+    );
   };
 
   useEffect(() => {
@@ -55,14 +57,11 @@ export function CategoryStage() {
           <div className="mb-8 mt-4 h-8 flex justify-center items-center">
             {isSpinning ? (
               <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-500 animate-pulse flex items-center gap-3">
-               
                 Drawing
               </h2>
             ) : finalResult ? (
               <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-400 flex items-center gap-2 animate-in fade-in zoom-in duration-300">
-              
                 Your Topic
-                
               </h2>
             ) : (
               <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-700/60">
@@ -70,17 +69,17 @@ export function CategoryStage() {
               </h2>
             )}
           </div>
-          
+
           <div
             className={clsx(
-              "w-full rounded-lg p-12 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden transition-all duration-500"
+              "w-full rounded-lg p-12 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden transition-all duration-500",
             )}
             onClick={() => !isSpinning && startSpin()}
           >
             <div
               className={clsx(
                 "text-4xl md:text-5xl font-medium tracking-tight text-center font-mono w-full transition-all duration-500",
-                finalResult ? "text-orange-50" : "text-orange-200/40"
+                finalResult ? "text-orange-50" : "text-orange-200/40",
               )}
             >
               <SlotReel
@@ -98,10 +97,10 @@ export function CategoryStage() {
                 onClick={startSpin}
                 disabled={isSpinning}
                 className={clsx(
-                  "px-8 py-3 text-sm font-bold font-mono tracking-widest uppercase rounded transition-all duration-300",
+                  "px-8 py-3 text-sm cursor-pointer font-bold font-mono tracking-widest uppercase rounded transition-all duration-300",
                   isSpinning
                     ? "bg-orange-900/30 text-white/50 cursor-not-allowed"
-                    : "bg-orange-500 text-white hover:bg-orange-400 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]"
+                    : "bg-orange-500 text-white hover:bg-orange-400 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]",
                 )}
               >
                 {isSpinning ? "Spinning..." : "Spin"}
@@ -110,7 +109,7 @@ export function CategoryStage() {
               <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-in fade-in slide-in-from-bottom-4">
                 <button
                   onClick={startSpin}
-                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold font-mono tracking-widest uppercase rounded bg-orange-950/40 border border-orange-900/50 text-orange-400 hover:bg-orange-900/60 hover:text-orange-200 transition-all duration-300"
+                  className="px-8 py-3 cursor-pointer w-full sm:w-auto text-sm font-bold font-mono tracking-widest uppercase rounded bg-orange-950/40 border border-orange-900/50 text-orange-400 hover:bg-orange-900/60 hover:text-orange-200 transition-all duration-300"
                 >
                   Spin Again
                 </button>
@@ -122,7 +121,7 @@ export function CategoryStage() {
                 </button> */}
                 <button
                   onClick={() => startTimer(3)}
-                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold font-mono tracking-widest uppercase rounded bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)] flex items-center justify-center gap-2 group"
+                  className="px-8 py-3 w-full cursor-pointer sm:w-auto text-sm font-bold font-mono tracking-widest uppercase rounded bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)] flex items-center justify-center gap-2 group"
                 >
                   Build it!
                 </button>
@@ -140,8 +139,18 @@ export function CategoryStage() {
           <span>to {finalResult ? "spin again" : "spin"}</span>
         </div>
         <div className="flex items-center gap-2 font-mono text-orange-300">
-          <span className="bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent font-bold">Funiche Roulette</span>
-          <span>by <a className="hover:underline" href="https://www.instagram.com/champ.ratt/">@champ.ratt</a></span>
+          <span className="bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent font-bold">
+            Funiche Roulette
+          </span>
+          <span>
+            by{" "}
+            <a
+              className="hover:underline"
+              href="https://www.instagram.com/champ.ratt/"
+            >
+              @champ.ratt
+            </a>
+          </span>
         </div>
       </footer>
     </div>

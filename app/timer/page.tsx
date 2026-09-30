@@ -7,7 +7,7 @@ import { clsx } from "clsx";
 function TimerContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  
+
   const topic = searchParams.get("topic") || "Something Awesome";
   const initialHours = parseInt(searchParams.get("hours") || "1", 10);
 
@@ -35,28 +35,27 @@ function TimerContent() {
   return (
     <div className="flex-1 flex flex-col justify-center items-center w-full max-w-6xl ">
       {/* <div className="w-full bg-[#1a0c00] border border-orange-500/60 shadow-[0_0_80px_-15px_rgba(249,115,22,0.3)] rounded-lg p-12 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden animate-in zoom-in duration-500"> */}
-        <div className="bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent text-sm font-bold font-mono tracking-[0.3em] uppercase  mb-8 flex items-center gap-2">
-         
-          Time Remaining
-        </div>
-        <div className="text-6xl md:text-9xl font-black font-mono  mb-8">
-          {formatTimer(timer)}
-        </div>
-        {/* <div className="text-orange-200/70 text-lg md:text-xl font-mono tracking-widest uppercase">
+      <div className="bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent text-sm font-bold font-mono tracking-[0.3em] uppercase  mb-8 flex items-center gap-2">
+        Time Remaining
+      </div>
+      <div className="text-6xl md:text-9xl font-black font-mono  mb-8">
+        {formatTimer(timer)}
+      </div>
+      {/* <div className="text-orange-200/70 text-lg md:text-xl font-mono tracking-widest uppercase">
           Building: <span className="text-orange-400 font-bold">{topic}</span>
         </div> */}
       {/* </div> */}
-      
+
       <div className="mt-8 flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-4 w-full sm:w-auto">
         <button
-          onClick={() => router.push('/')}
-          className="px-6 py-3 text-sm font-bold font-mono tracking-widest uppercase rounded border border-orange-900/50 text-orange-500 hover:text-white hover:bg-red-900/60 hover:border-red-500 transition-all duration-300 w-full sm:w-auto"
+          onClick={() => router.push("/")}
+          className="px-6 py-3 text-sm cursor-pointer font-bold font-mono tracking-widest uppercase rounded border border-orange-900/50 text-orange-500 hover:text-white hover:bg-red-900/60 hover:border-red-500 transition-all duration-300 w-full sm:w-auto"
         >
           Give Up
         </button>
         <button
           onClick={() => addTime(1)}
-          className="px-8 py-3 text-sm font-bold font-mono tracking-widest uppercase rounded bg-orange-900/40 border border-orange-900/50 text-orange-400 hover:bg-orange-800/50 hover:text-orange-200 transition-all duration-300 w-full sm:w-auto"
+          className="px-8 py-3 text-sm cursor-pointer font-bold font-mono tracking-widest uppercase rounded bg-orange-900/40 border border-orange-900/50 text-orange-400 hover:bg-orange-800/50 hover:text-orange-200 transition-all duration-300 w-full sm:w-auto"
         >
           + 1 Hour
         </button>
@@ -73,7 +72,13 @@ export default function TimerPage() {
           Funiche <span className="text-orange-500">Roulette</span>
         </h1>
       </header> */}
-      <Suspense fallback={<div className="mt-40 text-orange-500 font-mono animate-pulse">Loading...</div>}>
+      <Suspense
+        fallback={
+          <div className="mt-40 text-orange-500 font-mono animate-pulse">
+            Loading...
+          </div>
+        }
+      >
         <TimerContent />
       </Suspense>
     </div>

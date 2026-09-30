@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "funiche roulette",
+  title: "Funiche Roulette",
   description: "Spin and discover a random category.",
 };
 
