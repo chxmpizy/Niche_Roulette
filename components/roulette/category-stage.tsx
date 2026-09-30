@@ -38,14 +38,14 @@ export function CategoryStage() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0a0500] text-orange-50 selection:bg-orange-500/30">
       <header className="flex justify-center items-center p-6 text-sm tracking-wide font-mono text-orange-500/80">
-        <div className="text-4xl text-center bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent font-bold">
+        <div className="text-2xl text-center bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent font-bold">
           Funiche Roulette
         </div>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center p-4 md:p-8">
         <div className="flex flex-col items-center w-full max-w-6xl">
-          <div className="mb-2 h-8 flex justify-center items-center">
+          <div className="mb-8 mt-4 h-8 flex justify-center items-center">
             {isSpinning ? (
               <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-500 animate-pulse flex items-center gap-3">
                 <span className="w-2 h-2 rounded-full bg-orange-500 animate-ping absolute -ml-5" />
