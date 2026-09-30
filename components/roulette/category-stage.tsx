@@ -97,11 +97,7 @@ export function CategoryStage() {
         </div>
       </main>
 
-      <footer className="flex justify-between items-center p-6 border-t border-gray-900 text-sm text-gray-500">
-        <div className="flex items-center">
-          {hints}
-        </div>
-      </footer>
+      
     </div>
   );
 }
