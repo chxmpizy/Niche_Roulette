@@ -21,8 +21,8 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
     if (!isSpinning || isSpinningRef.current) return;
     isSpinningRef.current = true;
 
-    const duration = 2500 + Math.random() * 1000;
-    const fillerCount = 30 + Math.floor(Math.random() * 20);
+    const duration = 4500 + Math.random() * 1500;
+    const fillerCount = 70 + Math.floor(Math.random() * 20);
     const target = getRandomElement(items);
     const jumps = fillerCount + 1; // distance to the target
     
@@ -77,17 +77,17 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
         const lineH = strip.firstElementChild?.getBoundingClientRect().height || 0;
         const targetY = jumps * lineH;
 
-        strip.style.transition = `transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1)`;
+        strip.style.transition = `transform ${duration}ms cubic-bezier(0.15, 0.95, 0.25, 1)`;
         strip.style.transform = `translateY(-${targetY}px)`;
 
         scheduleReelSound(jumps, duration);
 
         setTimeout(() => {
           if (stripRef.current) {
-             stripRef.current.style.transition = `transform ${duration}ms cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease-out`;
+             stripRef.current.style.transition = `transform ${duration}ms cubic-bezier(0.15, 0.95, 0.25, 1), filter 0.4s ease-out`;
              stripRef.current.style.filter = "blur(0px)";
           }
-        }, duration * 0.45);
+        }, duration * 0.5);
 
         setTimeout(() => {
           isSpinningRef.current = false;
