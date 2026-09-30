@@ -3,7 +3,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "funiche roulette",
-  description: "Spin through 3 stages and discover a random product opportunity.",
+  description: "Spin and discover a random category.",
 };
 
 export default function RootLayout({
