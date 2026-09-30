@@ -37,10 +37,10 @@ export function CategoryStage() {
 
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0a0500] text-orange-50 selection:bg-orange-500/30">
-      <header className="flex justify-center items-center p-6 text-sm tracking-wide font-mono text-orange-500/80">
-        <div className="text-2xl text-center bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent font-bold">
-          Funiche Roulette
-        </div>
+      <header className="flex justify-center items-center w-full p-8 absolute top-0 left-0">
+        <h1 className="text-xl md:text-2xl font-sans font-bold tracking-tight text-white/90 select-none">
+          Funiche <span className="text-orange-500 ">Roulette</span>
+        </h1>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center p-4 md:p-8">
@@ -53,9 +53,9 @@ export function CategoryStage() {
               </h2>
             ) : finalResult ? (
               <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-400 flex items-center gap-2 animate-in fade-in zoom-in duration-300">
-                <span className="text-amber-500">✨</span>
+               
                 Your Topic
-                <span className="text-amber-500">✨</span>
+               
               </h2>
             ) : (
               <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-700/60">
@@ -64,7 +64,7 @@ export function CategoryStage() {
             )}
           </div>
           <div
-            className="w-full  rounded-lg p-12 flex flex-col items-center justify-center min-h-[150px] relative overflow-hidden cursor-pointer"
+            className="w-full  rounded-lg p-12 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden cursor-pointer"
             onClick={() => !isSpinning && startSpin()}
           >
             <div
