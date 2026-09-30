@@ -9,7 +9,7 @@ export function CategoryStage() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [finalResult, setFinalResult] = useState<string | null>(null);
 
-  const categoryNames = categories.map(c => c.name);
+  const categoryNames = categories.map((c) => c.name);
 
   const startSpin = () => {
     if (isSpinning) return;
@@ -38,23 +38,27 @@ export function CategoryStage() {
   return (
     <div className="flex-1 flex flex-col min-h-screen bg-[#0a0500] text-orange-50 selection:bg-orange-500/30">
       <header className="flex justify-center items-center p-6 text-sm tracking-wide font-mono text-orange-500/80">
-        <div className="text-4xl text-center bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent font-bold">Funiche Roulette</div>
+        <div className="text-4xl text-center bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent font-bold">
+          Funiche Roulette
+        </div>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center p-4 md:p-8">
         <div className="flex flex-col items-center w-full max-w-6xl">
-          <div 
-            className="w-full bg-[#140a00] border border-orange-900/40 rounded-lg p-12 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden cursor-pointer group shadow-[0_0_40px_-15px_rgba(249,115,22,0.05)] transition-all hover:border-orange-500/40 hover:shadow-[0_0_60px_-15px_rgba(249,115,22,0.15)]"
+          <div
+            className="w-full  rounded-lg p-12 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden cursor-pointer"
             onClick={() => !isSpinning && startSpin()}
           >
-            <div className={clsx(
-              "text-5xl font-medium tracking-tight text-center font-mono w-full",
-              finalResult ? "text-orange-50" : "text-orange-200/40"
-            )}>
-              <SlotReel 
-                items={categoryNames} 
-                isSpinning={isSpinning} 
-                onStop={handleStop} 
+            <div
+              className={clsx(
+                "text-5xl font-medium tracking-tight text-center font-mono w-full",
+                finalResult ? "text-orange-50" : "text-orange-200/40",
+              )}
+            >
+              <SlotReel
+                items={categoryNames}
+                isSpinning={isSpinning}
+                onStop={handleStop}
                 hasLanded={!!finalResult}
               />
             </div>
@@ -67,9 +71,9 @@ export function CategoryStage() {
                 disabled={isSpinning}
                 className={clsx(
                   "px-8 py-3 text-sm font-bold font-mono tracking-widest uppercase rounded transition-all duration-300",
-                  isSpinning 
+                  isSpinning
                     ? "bg-orange-900/30 text-white/50 cursor-not-allowed"
-                    : "bg-orange-500 text-white hover:bg-orange-400 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]"
+                    : "bg-orange-500 text-white hover:bg-orange-400 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]",
                 )}
               >
                 {isSpinning ? "Spinning..." : "Spin"}
@@ -85,6 +89,14 @@ export function CategoryStage() {
           </div>
         </div>
       </main>
+      <footer className="flex justify-between items-center border-orange-900/30 border-t py-4 px-6 text-sm text-orange-500/70">
+        <div className="flex items-center gap-2 font-mono">
+          <kbd className="px-2 py-1 bg-orange-950/50 border border-orange-900/50 rounded-md text-orange-300 font-bold shadow-sm">
+            Space
+          </kbd>
+          <span>to {finalResult ? "spin again" : "spin"}</span>
+        </div>
+      </footer>
     </div>
   );
 }
