@@ -9,3 +9,11 @@ body {
   background-color: #000;
   color: #fff;
 }
+
+@keyframes slowSpin {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+.animate-slow-spin {
+  animation: slowSpin 30s linear infinite;
+}

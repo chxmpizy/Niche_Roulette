@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { getRandomElement } from "@/lib/random";
 import { scheduleReelSound } from "@/lib/audio";
+import { clsx } from "clsx";
 
 type SlotReelProps = {
   items: string[];
@@ -12,10 +13,25 @@ type SlotReelProps = {
 };
 
 export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotReelProps) {
-  const [displayItems, setDisplayItems] = useState<string[]>(["???"]);
+  const [displayItems, setDisplayItems] = useState<string[]>([...items, ...items]);
   const [targetIndex, setTargetIndex] = useState<number>(0);
   const stripRef = useRef<HTMLDivElement>(null);
   const isSpinningRef = useRef(false);
+
+  const isIdle = !isSpinning && !hasLanded;
+
+  useEffect(() => {
+    // When returning to idle state (e.g. reset), reset the items so it can scroll
+    if (isIdle) {
+      setDisplayItems([...items, ...items]);
+      if (stripRef.current) {
+        // Clear any inline styles left over from the spin animation
+        stripRef.current.style.transition = "none";
+        stripRef.current.style.transform = "";
+        stripRef.current.style.filter = "blur(0px)";
+      }
+    }
+  }, [isIdle, items]);
 
   useEffect(() => {
     if (!isSpinning || isSpinningRef.current) return;
@@ -27,7 +43,11 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
     const jumps = fillerCount + 1; // distance to the target
     
     setDisplayItems((prev) => {
-      const sequence = [prev[targetIndex] || "???"];
+      // In idle state, prev is a long list. Let's just grab a random starting point.
+      // But for visual continuity, we could try to guess what's on screen.
+      // Since it's moving, picking a random item as the start of the spin sequence is fine 
+      // because the blur hides the cut.
+      const sequence = [getRandomElement(items)];
       
       const getUniqueItem = (recent: string[]) => {
         let attempts = 0;
@@ -99,7 +119,7 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
 
   return (
     <div 
-      className="h-[3em] -my-[0.8em] overflow-hidden w-full flex justify-center items-start relative"
+      className="h-[3em] -my-[0.8em] overflow-hidden w-full flex justify-center items-start relative pt-[0.8em]"
       style={{
         WebkitMaskImage: "linear-gradient(to bottom, transparent, black 30%, black 70%, transparent)",
         maskImage: "linear-gradient(to bottom, transparent, black 30%, black 70%, transparent)"
@@ -107,11 +127,17 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
     >
       <div
         ref={stripRef}
-        className="flex flex-col items-center will-change-transform origin-top pt-[0.8em] w-full"
+        className={clsx(
+          "flex flex-col items-center will-change-transform origin-top w-full",
+          isIdle && "animate-slow-spin"
+        )}
       >
         {displayItems.map((item, idx) => (
           <div key={idx} className="h-[1.4em] flex items-center justify-center whitespace-nowrap relative w-full">
-            <span className="relative">
+            <span className={clsx(
+              "relative transition-opacity duration-300",
+              (isIdle || (!isIdle && idx === targetIndex)) ? "opacity-100" : "opacity-40"
+            )}>
               {item}
               {hasLanded && idx === targetIndex && (
                 <span className="absolute -bottom-[2px] left-0 w-full h-[3px] bg-white animate-in slide-in-from-left duration-300" />
