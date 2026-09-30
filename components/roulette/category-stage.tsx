@@ -8,9 +8,6 @@ import { clsx } from "clsx";
 export function CategoryStage() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [finalResult, setFinalResult] = useState<string | null>(null);
-  const [hints, setHints] = useState<React.ReactNode>(
-    <><kbd className="font-mono text-[10px] uppercase border border-gray-700 rounded px-1.5 py-0.5 text-gray-400 bg-gray-900 mr-2">space</kbd> to spin</>
-  );
 
   const categoryNames = categories.map(c => c.name);
 
@@ -18,15 +15,11 @@ export function CategoryStage() {
     if (isSpinning) return;
     setIsSpinning(true);
     setFinalResult(null);
-    setHints(null);
   };
 
   const handleStop = (selected: string) => {
     setFinalResult(selected);
     setIsSpinning(false);
-    setHints(
-      <><kbd className="font-mono text-[10px] uppercase border border-gray-700 rounded px-1.5 py-0.5 text-gray-400 bg-gray-900 mr-2">space</kbd> to spin again</>
-    );
   };
 
   useEffect(() => {
@@ -43,24 +36,20 @@ export function CategoryStage() {
   }, [isSpinning]);
 
   return (
-    <div className="flex-1 flex flex-col min-h-screen bg-black text-white">
-      <header className="flex justify-center items-center p-6 border-b border-gray-900 text-sm tracking-wide font-mono text-gray-500">
-        <div className="text-2xl text-center">Funiche roulette</div>
+    <div className="flex-1 flex flex-col min-h-screen bg-[#0a0500] text-orange-50 selection:bg-orange-500/30">
+      <header className="flex justify-center items-center p-6 text-sm tracking-wide font-mono text-orange-500/80">
+        <div className="text-4xl text-center bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent font-bold">Funiche Roulette</div>
       </header>
 
       <main className="flex-1 flex flex-col items-center justify-center p-4 md:p-8">
         <div className="flex flex-col items-center w-full max-w-6xl">
           <div 
-            className="w-full bg-[#0a0a0a] border border-gray-800 rounded-lg p-12 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden cursor-pointer group"
+            className="w-full bg-[#140a00] border border-orange-900/40 rounded-lg p-12 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden cursor-pointer group shadow-[0_0_40px_-15px_rgba(249,115,22,0.05)] transition-all hover:border-orange-500/40 hover:shadow-[0_0_60px_-15px_rgba(249,115,22,0.15)]"
             onClick={() => !isSpinning && startSpin()}
           >
-            <div className="absolute top-8 text-gray-600 text-xs font-mono tracking-widest uppercase">
-              Select Category
-            </div>
-            
             <div className={clsx(
               "text-5xl font-medium tracking-tight text-center font-mono w-full",
-              finalResult ? "text-white" : "text-gray-300"
+              finalResult ? "text-orange-50" : "text-orange-200/40"
             )}>
               <SlotReel 
                 items={categoryNames} 
@@ -79,8 +68,8 @@ export function CategoryStage() {
                 className={clsx(
                   "px-8 py-3 text-sm font-mono tracking-widest uppercase rounded border transition-all duration-300",
                   isSpinning 
-                    ? "border-transparent text-gray-600 opacity-50"
-                    : "border-gray-700 text-gray-400 hover:text-white hover:border-white hover:bg-white/5"
+                    ? "border-transparent text-orange-900/50 opacity-50"
+                    : "border-orange-900/50 text-orange-500/70 hover:text-orange-200 hover:border-orange-500 hover:bg-orange-500/10 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.2)]"
                 )}
               >
                 {isSpinning ? "Spinning..." : "Spin"}
@@ -88,7 +77,7 @@ export function CategoryStage() {
             ) : (
               <button
                 onClick={startSpin}
-                className="px-8 py-3 text-sm font-mono tracking-widest uppercase rounded border border-white bg-white text-black hover:bg-gray-200 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4"
+                className="px-8 py-3 text-sm font-bold font-mono tracking-widest uppercase rounded border border-transparent bg-gradient-to-r from-amber-500 to-orange-600 text-black hover:opacity-90 transition-all duration-300 animate-in fade-in slide-in-from-bottom-4 shadow-[0_0_30px_-5px_rgba(249,115,22,0.4)]"
               >
                 Spin Again
               </button>
@@ -96,8 +85,6 @@ export function CategoryStage() {
           </div>
         </div>
       </main>
-
-      
     </div>
   );
 }

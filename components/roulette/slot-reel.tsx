@@ -140,7 +140,7 @@ export function SlotReel({ items, isSpinning, onStop, hasLanded = false }: SlotR
             )}>
               {item}
               {hasLanded && idx === targetIndex && (
-                <span className="absolute -bottom-[2px] left-0 w-full h-[3px] bg-white animate-in slide-in-from-left duration-300" />
+                <span className="absolute -bottom-[2px] left-0 w-full h-[3px] bg-gradient-to-r from-amber-400 to-orange-500 animate-in slide-in-from-left duration-300 shadow-[0_0_10px_rgba(249,115,22,0.5)]" />
               )}
             </span>
           </div>
