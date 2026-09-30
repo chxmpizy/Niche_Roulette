@@ -45,8 +45,26 @@ export function CategoryStage() {
 
       <main className="flex-1 flex flex-col items-center justify-center p-4 md:p-8">
         <div className="flex flex-col items-center w-full max-w-6xl">
+          <div className="mb-2 h-8 flex justify-center items-center">
+            {isSpinning ? (
+              <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-500 animate-pulse flex items-center gap-3">
+                <span className="w-2 h-2 rounded-full bg-orange-500 animate-ping absolute -ml-5" />
+                Drawing
+              </h2>
+            ) : finalResult ? (
+              <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-400 flex items-center gap-2 animate-in fade-in zoom-in duration-300">
+                <span className="text-amber-500">✨</span>
+                Your Topic
+                <span className="text-amber-500">✨</span>
+              </h2>
+            ) : (
+              <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-700/60">
+                Your Topic
+              </h2>
+            )}
+          </div>
           <div
-            className="w-full  rounded-lg p-12 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden cursor-pointer"
+            className="w-full  rounded-lg p-12 flex flex-col items-center justify-center min-h-[150px] relative overflow-hidden cursor-pointer"
             onClick={() => !isSpinning && startSpin()}
           >
             <div
@@ -94,7 +112,10 @@ export function CategoryStage() {
           <kbd className="px-2 py-1 bg-orange-950/50 border border-orange-900/50 rounded-md text-orange-300 font-bold shadow-sm">
             Space
           </kbd>
-          <span>to {finalResult ? "spin again" : "spin"}</span>
+          <span>{finalResult ? "spin again" : "to spin"}</span>
+        </div>
+        <div className="flex items-center gap-2 font-mono text-orange-300">
+          <span>made by <a className="hover:underline " href="https://www.instagram.com/champ.ratt/">@champ.ratt</a></span>
         </div>
       </footer>
     </div>
