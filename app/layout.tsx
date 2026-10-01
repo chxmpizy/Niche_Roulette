@@ -7,6 +7,7 @@ const notoSansThai = Noto_Sans_Thai({
   subsets: ["thai", "latin"],
   weight: ["300", "400", "500", "700"],
   display: "swap",
+  variable: "--font-noto-sans-thai",
 });
 
 export const metadata: Metadata = {
@@ -20,8 +21,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="h-full antialiased">
-      <body className={`min-h-full flex flex-col ${notoSansThai.className} bg-[#0a0500] text-white selection:bg-orange-500/30`}>
+    <html lang="en" className={`h-full antialiased ${notoSansThai.variable}`}>
+      <body className="min-h-full flex flex-col font-sans bg-[#0a0500] text-white selection:bg-orange-500/30">
         <LanguageProvider>
           {children}
         </LanguageProvider>

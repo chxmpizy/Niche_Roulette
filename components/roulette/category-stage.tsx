@@ -66,18 +66,18 @@ export function CategoryStage() {
         <div className="flex flex-col items-center w-full max-w-6xl">
           <div className="mb-8 mt-4 h-8 flex justify-center items-center">
             {isSpinning ? (
-              <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-500 animate-pulse flex items-center gap-3">
+              <h2 className="text-sm font-bold tracking-[0.3em] uppercase text-orange-500 animate-pulse flex items-center gap-3">
                 
                 {t("drawing")}
               </h2>
             ) : finalResult ? (
-              <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-400 flex items-center gap-2 animate-in fade-in zoom-in duration-300">
+              <h2 className="text-sm font-bold tracking-[0.3em] uppercase text-orange-400 flex items-center gap-2 animate-in fade-in zoom-in duration-300">
                
                 {t("yourTopic")}
                
               </h2>
             ) : (
-              <h2 className="text-sm font-bold font-mono tracking-[0.3em] uppercase text-orange-700/60">
+              <h2 className="text-sm font-bold tracking-[0.3em] uppercase text-orange-700/60">
                 {t("yourTopic")}
               </h2>
             )}
@@ -91,7 +91,7 @@ export function CategoryStage() {
           >
             <div
               className={clsx(
-                "text-4xl md:text-5xl font-medium tracking-tight text-center font-mono w-full transition-all duration-500",
+                "text-4xl md:text-5xl font-medium tracking-tight text-center w-full transition-all duration-500",
                 finalResult ? "text-orange-50" : "text-orange-200/40"
               )}
             >
@@ -111,7 +111,7 @@ export function CategoryStage() {
                 onClick={startSpin}
                 disabled={isSpinning}
                 className={clsx(
-                  "px-8 py-3 text-sm font-bold font-mono tracking-widest uppercase rounded transition-all duration-300",
+                  "px-8 py-3 text-sm font-bold tracking-widest uppercase rounded transition-all duration-300",
                   isSpinning
                     ? "bg-orange-900/30 text-white/50 cursor-not-allowed"
                     : "bg-orange-500 text-white hover:bg-orange-400 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]"
@@ -123,19 +123,19 @@ export function CategoryStage() {
               <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-in fade-in slide-in-from-bottom-4">
                 <button
                   onClick={startSpin}
-                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold font-mono tracking-widest uppercase rounded bg-orange-950/40 border border-orange-900/50 text-orange-400 hover:bg-orange-900/60 hover:text-orange-200 transition-all duration-300"
+                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold tracking-widest uppercase rounded bg-orange-950/40 border border-orange-900/50 text-orange-400 hover:bg-orange-900/60 hover:text-orange-200 transition-all duration-300"
                 >
                   {t("spinAgain")}
                 </button>
                 {/* <button
                   onClick={() => startTimer(1)}
-                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold font-mono tracking-widest uppercase rounded border border-orange-600 text-orange-400 hover:bg-orange-900/50 hover:text-orange-200 transition-all duration-300 shadow-[0_0_15px_-5px_rgba(249,115,22,0.2)] flex items-center justify-center gap-2"
+                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold tracking-widest uppercase rounded border border-orange-600 text-orange-400 hover:bg-orange-900/50 hover:text-orange-200 transition-all duration-300 shadow-[0_0_15px_-5px_rgba(249,115,22,0.2)] flex items-center justify-center gap-2"
                 >
                   {t("timer1h")}
                 </button> */}
                 <button
                   onClick={() => startTimer(3)}
-                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold font-mono tracking-widest uppercase rounded bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)] flex items-center justify-center gap-2 group"
+                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold tracking-widest uppercase rounded bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)] flex items-center justify-center gap-2 group"
                 >
                   {t("buildIt3h")}
                 </button>
@@ -146,13 +146,13 @@ export function CategoryStage() {
       </main>
 
       <footer className="flex justify-between items-center border-orange-900/30 border-t py-4 px-6 text-sm text-orange-500/70">
-        <div className="flex items-center gap-2 font-mono">
+        <div className="flex items-center gap-2 ">
           <kbd className="px-2 py-1 bg-orange-950/50 border border-orange-900/50 rounded-md text-orange-300 font-bold shadow-sm">
             Space
           </kbd>
           <span>{finalResult ? t("spaceToSpinAgain") : t("spaceToSpin")}</span>
         </div>
-        <div className="flex items-center gap-2 font-mono text-orange-300">
+        <div className="flex items-center gap-2 text-orange-300">
           <span className="bg-gradient-to-r from-amber-400 to-orange-600 bg-clip-text text-transparent font-bold">{t("title")} {t("subtitle")}</span>
           <span>{t("by")} <a className="hover:underline" href="https://www.instagram.com/champ.ratt/">@champ.ratt</a></span>
         </div>
