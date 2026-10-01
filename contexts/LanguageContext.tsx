@@ -33,7 +33,7 @@ const dictionaries: Record<Language, Translations> = {
     yourTopic: "หัวข้อของคุณ",
     drawing: "กำลังสุ่ม",
     spin: "สุ่มเลย",
-    spinning: "กำลังสุ่ม...",
+    spinning: "กำลังหมุน...",
     spinAgain: "สุ่มอีกครั้ง",
     buildIt3h: "ลุยเลย!",
     spaceToSpin: "เพื่อสุ่ม",
