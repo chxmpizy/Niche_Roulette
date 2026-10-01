@@ -50,7 +50,7 @@ const dictionaries: Record<Language, Translations> = {
 interface LanguageContextProps {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (key: keyof typeof dictionaries.en) => string;
+  t: (key: keyof typeof dictionaries.en) => string | number;
 }
 
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
@@ -72,7 +72,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     localStorage.setItem("lang", lang);
   };
 
-  const t = (key: string) => {
+  const t = (key: string | number) => {
     if (!mounted) return dictionaries.en[key] || key; // fallback for SSR
     return dictionaries[language][key] || key;
   };
