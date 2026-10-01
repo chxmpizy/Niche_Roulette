@@ -1,6 +1,13 @@
 import type { Metadata } from "next";
+import { Noto_Sans_Thai } from "next/font/google";
 import "./globals.css";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+
+const notoSansThai = Noto_Sans_Thai({
+  subsets: ["thai", "latin"],
+  weight: ["300", "400", "500", "700"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: "Funiche Roulette",
@@ -14,7 +21,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="h-full antialiased">
-      <body className="min-h-full flex flex-col font-sans bg-black text-white selection:bg-white selection:text-black">
+      <body className={`min-h-full flex flex-col ${notoSansThai.className} bg-[#0a0500] text-white selection:bg-orange-500/30`}>
         <LanguageProvider>
           {children}
         </LanguageProvider>

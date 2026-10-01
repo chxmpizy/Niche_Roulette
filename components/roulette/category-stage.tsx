@@ -57,7 +57,7 @@ export function CategoryStage() {
     <div className="flex-1 flex flex-col min-h-screen bg-[#0a0500] text-orange-50 selection:bg-orange-500/30 relative">
       <LanguageToggle />
       {/* <header className="flex justify-center items-center w-full p-8 absolute top-0 left-0">
-        <h1 className="text-xl md:text-2xl font-sans font-bold tracking-tight text-white/90 select-none">
+        <h1 className="text-xl md:text-2xl font-bold tracking-tight text-white/90 select-none">
           {t("title")} <span className="text-orange-500">{t("subtitle")}</span>
         </h1>
       </header> */}
