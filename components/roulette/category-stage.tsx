@@ -11,7 +11,8 @@ export function CategoryStage() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [finalResult, setFinalResult] = useState<string | null>(null);
 
-  const categoryNames = categories.map((c) => c.name);
+  // Flatten all sub-niches from all categories to spin specific topics
+  const categoryNames = categories.flatMap((c) => c.subNiches);
 
   const startSpin = () => {
     if (isSpinning) return;
