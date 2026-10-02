@@ -91,13 +91,13 @@ export function CategoryStage() {
           
           <div
             className={clsx(
-              "w-full rounded-lg p-12 flex flex-col items-center justify-center min-h-[200px] relative overflow-hidden transition-all duration-500",
+              "w-full rounded-lg p-6 sm:p-8 md:p-12 flex flex-col items-center justify-center min-h-[150px] sm:min-h-[200px] relative overflow-hidden transition-all duration-500",
             )}
             onClick={() => !isSpinning && startSpin()}
           >
             <div
               className={clsx(
-                "text-4xl md:text-5xl font-medium tracking-tight text-center w-full transition-all duration-500",
+                "text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium tracking-tight text-center w-full transition-all duration-500",
                 finalResult ? "text-orange-50" : "text-orange-200/40"
               )}
             >
@@ -111,13 +111,13 @@ export function CategoryStage() {
             </div>
           </div>
 
-          <div className="min-h-[5rem] mt-8 w-full flex flex-col sm:flex-row items-center justify-center gap-4">
+          <div className="min-h-[5rem] mt-4 sm:mt-8 w-full flex flex-col sm:flex-row items-center justify-center gap-4">
             {!finalResult ? (
               <button
                 onClick={startSpin}
                 disabled={isSpinning}
                 className={clsx(
-                  "px-8 py-3 text-sm font-bold tracking-widest uppercase rounded transition-all duration-300",
+                  "px-8 py-3 w-full sm:w-auto text-sm font-bold tracking-widest uppercase rounded transition-all duration-300",
                   isSpinning
                     ? "bg-orange-900/30 text-white/50 cursor-not-allowed"
                     : "bg-orange-500 text-white hover:bg-orange-400 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]"
@@ -133,12 +133,6 @@ export function CategoryStage() {
                 >
                   {t("spinAgain")}
                 </button>
-                {/* <button
-                  onClick={() => startTimer(1)}
-                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold tracking-widest uppercase rounded border border-orange-600 text-orange-400 hover:bg-orange-900/50 hover:text-orange-200 transition-all duration-300 shadow-[0_0_15px_-5px_rgba(249,115,22,0.2)] flex items-center justify-center gap-2"
-                >
-                  {t("timer1h")}
-                </button> */}
                 <button
                   onClick={() => startTimer(3)}
                   className="px-8 py-3 w-full sm:w-auto text-sm font-bold tracking-widest uppercase rounded bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)] flex items-center justify-center gap-2 group"
@@ -151,8 +145,8 @@ export function CategoryStage() {
         </div>
       </main>
 
-      <footer className="flex justify-between items-center border-orange-900/30 border-t py-4 px-6 text-sm text-orange-500/70">
-        <div className="flex items-center gap-2 ">
+      <footer className="flex flex-col sm:flex-row justify-between items-center gap-4 border-orange-900/30 border-t py-4 px-4 sm:px-6 text-sm text-orange-500/70 text-center sm:text-left">
+        <div className="hidden sm:flex items-center gap-2">
           <kbd className="px-2 py-1 bg-orange-950/50 border border-orange-900/50 rounded-md text-orange-300 font-bold shadow-sm">
             Space
           </kbd>

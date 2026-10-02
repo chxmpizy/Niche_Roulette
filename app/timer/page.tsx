@@ -39,17 +39,17 @@ function TimerContent() {
   };
 
   return (
-    <div className="flex-1 flex flex-col items-center w-full max-w-6xl mt-12 md:mt-24">
-      <div className="w-full bg-[#1a0c00] border border-orange-500/60 shadow-[0_0_80px_-15px_rgba(249,115,22,0.3)] rounded-lg p-12 flex flex-col items-center justify-center min-h-[400px] relative overflow-hidden animate-in zoom-in duration-500">
-        <div className="text-sm font-bold tracking-[0.3em] uppercase text-orange-500 mb-8 flex items-center gap-2">
+    <div className="flex-1 flex flex-col items-center w-full max-w-6xl mt-20 sm:mt-12 md:mt-24">
+      <div className="w-full bg-[#1a0c00] border border-orange-500/60 shadow-[0_0_80px_-15px_rgba(249,115,22,0.3)] rounded-lg p-6 sm:p-8 md:p-12 flex flex-col items-center justify-center min-h-[300px] sm:min-h-[400px] relative overflow-hidden animate-in zoom-in duration-500">
+        <div className="text-sm font-bold tracking-[0.3em] uppercase text-orange-500 mb-4 sm:mb-8 flex items-center gap-2">
           <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
           {t("timeRemaining")}
         </div>
-        <div className="text-6xl md:text-9xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-orange-300 to-orange-600 drop-shadow-[0_0_30px_rgba(249,115,22,0.4)] mb-8">
+        <div className="text-5xl sm:text-6xl md:text-8xl lg:text-9xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-orange-300 to-orange-600 drop-shadow-[0_0_30px_rgba(249,115,22,0.4)] mb-4 sm:mb-8">
           {formatTimer(timer)}
         </div>
-        <div className="text-orange-200/70 text-lg md:text-xl tracking-widest uppercase">
-          {t("building")} <span className="text-orange-400 font-bold">{topic}</span>
+        <div className="text-orange-200/70 text-base sm:text-lg md:text-xl tracking-widest uppercase text-center break-words max-w-full">
+          {t("building")} <span className="text-orange-400 font-bold block sm:inline mt-2 sm:mt-0">{topic}</span>
         </div>
       </div>
       
