@@ -14,8 +14,14 @@ export function CategoryStage() {
   const [isSpinning, setIsSpinning] = useState(false);
   const [finalResult, setFinalResult] = useState<{en: string, th: string} | null>(null);
 
-  // Flatten all sub-niches to spin specific topics
-  const categoryObjects = categories.flatMap((c) => c.subNiches);
+  // Interleave sub-niches so they are scattered and not grouped by category
+  const categoryObjects = [];
+  const maxLen = Math.max(...categories.map((c) => c.subNiches.length));
+  for (let i = 0; i < maxLen; i++) {
+    categories.forEach((c) => {
+      if (c.subNiches[i]) categoryObjects.push(c.subNiches[i]);
+    });
+  }
   // Get string representation for slot reel based on current language
   const categoryNames = categoryObjects.map(c => c[language]);
 
