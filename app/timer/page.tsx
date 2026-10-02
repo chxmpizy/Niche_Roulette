@@ -53,16 +53,16 @@ function TimerContent() {
         </div>
       </div>
       
-      <div className="mt-8 flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-4 w-full sm:w-auto">
+      <div className="mt-8 flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-4">
         <button
           onClick={() => router.push('/')}
-          className="px-6 py-3 text-sm font-bold tracking-widest uppercase rounded border border-orange-900/50 text-orange-500 hover:text-white hover:bg-red-900/60 hover:border-red-500 transition-all duration-300 w-full sm:w-auto"
+          className="px-6 py-3 text-sm font-bold tracking-widest uppercase rounded border border-orange-900/50 text-orange-500 hover:text-white hover:bg-red-900/60 hover:border-red-500 transition-all duration-300"
         >
           {t("giveUp")}
         </button>
         <button
           onClick={() => addTime(1)}
-          className="px-8 py-3 text-sm font-bold tracking-widest uppercase rounded bg-orange-900/40 border border-orange-900/50 text-orange-400 hover:bg-orange-800/50 hover:text-orange-200 transition-all duration-300 w-full sm:w-auto"
+          className="px-6 py-3 text-sm font-bold tracking-widest uppercase rounded bg-orange-900/40 border border-orange-900/50 text-orange-400 hover:bg-orange-800/50 hover:text-orange-200 transition-all duration-300"
         >
           {t("add1h")}
         </button>

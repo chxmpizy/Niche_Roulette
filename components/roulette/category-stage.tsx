@@ -117,7 +117,7 @@ export function CategoryStage() {
                 onClick={startSpin}
                 disabled={isSpinning}
                 className={clsx(
-                  "px-8 py-3 w-full sm:w-auto text-sm font-bold tracking-widest uppercase rounded transition-all duration-300",
+                  "px-6 py-3 text-sm font-bold tracking-widest uppercase rounded transition-all duration-300",
                   isSpinning
                     ? "bg-orange-900/30 text-white/50 cursor-not-allowed"
                     : "bg-orange-500 text-white hover:bg-orange-400 hover:shadow-[0_0_20px_-5px_rgba(249,115,22,0.4)]"
@@ -126,16 +126,16 @@ export function CategoryStage() {
                 {isSpinning ? t("spinning") : t("spin")}
               </button>
             ) : (
-              <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-in fade-in slide-in-from-bottom-4">
+              <div className="flex flex-col sm:flex-row gap-4 animate-in fade-in slide-in-from-bottom-4">
                 <button
                   onClick={startSpin}
-                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold tracking-widest uppercase rounded bg-orange-950/40 border border-orange-900/50 text-orange-400 hover:bg-orange-900/60 hover:text-orange-200 transition-all duration-300"
+                  className="px-6 py-3 text-sm font-bold tracking-widest uppercase rounded bg-orange-950/40 border border-orange-900/50 text-orange-400 hover:bg-orange-900/60 hover:text-orange-200 transition-all duration-300"
                 >
                   {t("spinAgain")}
                 </button>
                 <button
                   onClick={() => startTimer(3)}
-                  className="px-8 py-3 w-full sm:w-auto text-sm font-bold tracking-widest uppercase rounded bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)] flex items-center justify-center gap-2 group"
+                  className="px-6 py-3 text-sm font-bold tracking-widest uppercase rounded bg-gradient-to-r from-orange-400 to-orange-600 text-white hover:opacity-90 transition-all duration-300 shadow-[0_0_30px_-5px_rgba(249,115,22,0.5)] flex items-center justify-center gap-2 group"
                 >
                   {t("buildIt3h")}
                 </button>
