@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { categories } from "@/data/categories";
+import { categories, SubNiche } from "@/data/categories";
 import { SlotReel } from "./slot-reel";
 import { clsx } from "clsx";
 import { useLanguage } from "@/contexts/LanguageContext";
@@ -15,7 +15,7 @@ export function CategoryStage() {
   const [finalResult, setFinalResult] = useState<{en: string, th: string} | null>(null);
 
   // Interleave sub-niches so they are scattered and not grouped by category
-  const categoryObjects = [];
+  const categoryObjects: SubNiche[] = [];
   const maxLen = Math.max(...categories.map((c) => c.subNiches.length));
   for (let i = 0; i < maxLen; i++) {
     categories.forEach((c) => {
